@@ -49,5 +49,40 @@ void loop()
     delay(3000);
 }
 
-// Downside of loops are that they take a long time - particularly in longer pieces of code (here we're just flashing a LED so it's quick)
+// Downside of loops are that they take a long time - particularly in longer pieces of code (here we're just flashing a LED so it's quick). To improve the efficiency:
+
+int ledPin = 10;
+int delayPeriod = 100;
+int count = 0;
+
+void setup()
+{
+    pinMode(ledPin, OUTPUT);
+}
+
+void loop()
+{
+    digitalWrite(ledPin, HIGH);
+    delay(delayPeriod);
+    digitalWrite(ledPin, LOW);
+    delay(delayPeriod);
+    count ++; 
+    if (count == 20)
+    {
+        count = 0;
+        delay(3000);
+    }
+}
+
+// You can also use a while command in place of the for command
+
+int i = 0;
+while (i < 20)
+{
+    digitalWrite(ledPin, HIGH);
+    delay(delayPeriod);
+    digitalWrite(ledPin, LOW);
+    delay(delayPeriod);
+    i ++; 
+}
 
