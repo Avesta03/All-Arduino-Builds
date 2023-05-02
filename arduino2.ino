@@ -30,6 +30,7 @@ void loop()
 // OR, a simpler method (through a 'for' loop):
 
 int ledPin = 10;
+int ledPin = 11;
 int delayPeriod = 100;
 
 void setup()
