@@ -54,8 +54,38 @@ void loop()
     }
 }
 
-/* The algorithm for the function is:
+/* The algorithm for the function above is:
    If it's a letter, flash it using the letters array/
    If it's a number, flash it using the numbers array.
    If it's a space, flash four times the dot delay. */
+
+// Implementing the flashSequence function itself
+
+void flashSequence(char* sequence)
+{
+    int i = 0;
+    while (sequence[i] != '\0')
+    {
+        flashDotOrDash(sequence[i]); // Delegate the flashing of an individual dot or dash to a new method (flashDotOrDash)
+        i++;
+    }
+    delay(dotDelay * 3); // gap between letters
+}
+
+// Implementing the flashDotOrDash function
+
+void flashDotOrDash(char dotOrDash)
+{
+    digitalWrite(ledPin, HIGH)
+    if (dotOrDash == '.')
+    {
+        delay(dotDelay)
+    }
+    else // must be a -
+    {
+        delay(dotDelay * 3);
+    }
+    digitalWrite(ledPin, LOW);
+    delay(dotDelay); // gap between flashes
+}
 

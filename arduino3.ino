@@ -61,5 +61,14 @@ void loop()
     delay(1000);
 }
 
+////
 
-
+// Serial Communication with an Arduino goes like: Computer to {Arduino: USB to Serial {to Microprocessor: UART to Buffer}}
+// The USB is converted from USB signal levels and protocol to something the microcontroller on the Arduino board can use.
+/* This conversion happens in a special-purpose chip on the Arduino board. The data is then received by a part of the microcontroller called the 
+   Universal Asynchronous Receiver/Transmitter (UART) which then places the data it receives into a buffer. */
+// The buffer is a special area of memory (128 bytes) that can hold data that is removed as soon as it is read. You can think of it like an email inbox.
+// The function Serial.available() checks to see whether you "have mail" and returns the number of bytes of data in the buffer that are waiting for you to read.
+// If there aren't any messages to be read, then the function will return a 0.
+/* This is why the if statement in LEDmorsecodetranslator.ino checks to see that there are more than 0 bytes available to be read, and if there are,
+   then the first thing the statement does i sread the next available char, using the function Serial.read(), which then gets assigned to the local var `ch` */
