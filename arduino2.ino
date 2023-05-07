@@ -113,3 +113,35 @@ void flash() // Calling a function 'flash'
     digitalWrite(ledPin, LOW);
     delay(delayPeriod);
 }
+
+/// Parameters ///
+
+const int ledPin = 10;
+const int delayPeriod = 250;
+
+void setup()
+{
+    pinMode(ledPin, OUTPUT);
+}
+
+void loop()
+{
+    flash(20, delayPeriod);
+    delay(3000);
+}
+
+void flash(int numFlashes, int d)
+{
+    for (int i = 0; i < numFlashes; i++)
+    {
+        digitalWrite(ledPin, HIGH);
+        delay(d);
+        digitalWrite(ledPin, LOW);
+        delay(d);
+    }
+}
+
+// The loop function now only has two lines in it and most of the work has been moved to the flash function (which now also is supplied with two arguments in parentheses)
+// We have to declare the type of variable in the parameters (here they are both int) and are in fact defining new variables.
+// But these variables (numFlashes and d) can only be used within the flash function.
+// Only info needed from outside the function is to which pin the LED is attached.
