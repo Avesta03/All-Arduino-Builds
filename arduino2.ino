@@ -188,7 +188,42 @@ void loop()
     if (count == 20)
     {
         count = 0;
-        delay(3000)
+        delay(3000);
     }
 }
 
+// Return Values (all our past functions have been 'void' functions - now we'll look at those that specify a return type)
+
+int centToFaren(int c) // Note how we've replaced void with int - the function will now return an int to whatever calls it
+{
+    int f = c * 9 / 5 + 32;
+    return f;
+}
+
+// The value after return can also be an expression so we can compress the above to:
+
+int centToFaren(int c)
+{
+    return (c * 9 / 5 + 32);
+}
+
+// If the expression being returned is more than just a var name, then it should be inclosed in parentheses as seen above.
+
+// Other variable types include floats; boolean (values); chars; etc
+
+f = c * 9 / 5 + 32 // if c = 17, then f would be 62.6 - but if f is an int, then the value would be truncated to 62 [these are floats]
+
+boolean tooBig = (x > 10);
+if (tooBig)
+{
+    x = 5;
+}
+
+/* Conditions in if statements like (count == 20) are actually expressions that yield boolean results, and the operator == is called a comparison operator (which compares values and returns true or false)
+ Boolean values can be manipulated using Boolean operators i.e. you can also perform operations on Boolean values.
+ Most commonly used Boolean operators are `and`, which is written as &&; `or`, which is written as ||; and `not`, which is written as !. 
+*/
+
+if ((x > 10) && (x < 50))
+
+// Data types take up memory (usually 1, 2, or 4 Bytes), and have a variety of ranges such as true or false (0 or 1; for `char`), or -32768 to +32767 (for `int`).
