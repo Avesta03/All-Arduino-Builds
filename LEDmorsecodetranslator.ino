@@ -3,7 +3,7 @@
 
 // Building the Data Structures
 char* letters[] = {
-    ".-", "-...", "-.-.", ".",
+    ".-", "-...", "-.-.", "-..", ".",
     "..-.", "--.", "....", "..",
     ".---", "-.-", ".-..", ".-.",
     "...", "-", "..-", "...-", ".--",
@@ -76,10 +76,10 @@ void flashSequence(char* sequence)
 
 void flashDotOrDash(char dotOrDash)
 {
-    digitalWrite(ledPin, HIGH)
+    digitalWrite(ledPin, HIGH);
     if (dotOrDash == '.')
     {
-        delay(dotDelay)
+        delay(dotDelay);
     }
     else // must be a -
     {
