@@ -50,8 +50,45 @@ void loop()
 // As with using an output, you need to tell the Arduino in the setup that you're going to use a pin as an input.
 // You then get the value of a digital input using the digitalRead function, which returns either 0 or 1.
 
-// Pull-Up Resistors
+/// Pull-Up Resistors
 
 /* Upload code above, then input wire into pin 52, then touch the other end and see SM... and start picking up electrical interference
    as a human antenna - otherwise put that other end into 5V and see the text change to ones. Put it into GND and get zeros!! */
 
+// Internal Pull-Up Resistors
+
+// Fortunately the Arduino has software-configurable pull-up resistors built into the digital pins, which by default are turned off.
+
+const int inputPin = 5;
+
+void setup()
+{
+    pinMode(inputPin, INPUT_PULLUP); // Pull-Up resistor is enabled
+    Serial.begin(9600);
+}
+
+void loop()
+{
+    int reading = digitalRead(inputPin);
+    Serial.println(reading);
+    delay(1000);
+}
+
+// Debouncing
+
+// When you press a button, the metal contacts in the button bounce. This happens very quickly (e.g. ~200ms) and modern buttons may not even visibly bounce, if at all.
+
+const int inputPin = 5;
+const int ledPin = 10;
+
+void setup()
+{
+    pinMode(ledPin, OUTPUT); // Pull-Up resistor is enabled
+    pinMode(inputPin, INPUT_PULLUP)
+}
+
+void loop()
+{
+    int switchOpen = digitalRead
+    digitalWrite(ledPin, ! switchOpen) // ! = `not` operator
+}
