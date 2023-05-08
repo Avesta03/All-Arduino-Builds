@@ -78,17 +78,87 @@ void loop()
 
 // When you press a button, the metal contacts in the button bounce. This happens very quickly (e.g. ~200ms) and modern buttons may not even visibly bounce, if at all.
 
-const int inputPin = 5;
+const int inputPin = 52;
 const int ledPin = 10;
 
 void setup()
 {
     pinMode(ledPin, OUTPUT); // Pull-Up resistor is enabled
-    pinMode(inputPin, INPUT_PULLUP)
+    pinMode(inputPin, INPUT_PULLUP);
 }
 
 void loop()
 {
-    int switchOpen = digitalRead
-    digitalWrite(ledPin, ! switchOpen) // ! = `not` operator
+    int switchOpen = digitalRead(inputPin);
+    digitalWrite(ledPin, ! switchOpen); // ! = `not` operator
 }
+
+// Now using the wire (D5 + GND) as a switch
+
+const int inputPin = 52;
+const int ledPin = 10;
+int ledValue = LOW;
+
+void setup()
+{
+    pinMode(ledPin, OUTPUT); // Pull-Up resistor is enabled
+    pinMode(inputPin, INPUT_PULLUP);
+}
+
+void loop()
+{
+    if (digitalRead(inputPin) == LOW)
+    {
+        ledValue = ! ledValue;
+        digitalWrite(ledPin, ledValue);
+        // to tackle bouncing, simply add a delay: delay(500); - this will ensure bouncing will have subsided within the 500ms, making toggling more reliable
+    }
+}
+
+// You can also install a Bounce library to make LED toggling more reliable (but I can't find the library...)
+
+// Analog Outputs (can be tested using a multimeter, which we don't yet have - we will return to this later)
+
+const int outputPin = 3;
+
+void setup()
+{
+    pinMode(outputPin, OUTPUT);
+    Serial.begin(9600);
+    Serial.println("Enter Volts 0 to 5");
+}
+
+void loop()
+{
+    if (Serial.available() > 0)
+    {
+        float volts = Serial.parseFloat();
+        int pwmValue = volts * 255.0 / 5.0;
+        analogWrite(outputPin, pwmValue); // You can set the value of the output with the analogWrite function
+    }
+}
+
+// PWM = Pulse Width Modulations which refer to the means of controlling amount of power at output (which is done by rapidly turning the output on and off)
+// By controlling variables like brightness using PWM and varying the avg amount of time that the LED is on, you achieve much more linear control of the brightness
+
+// Analog Input (analog inputs give you a value between 0 and 1023 depending ont he voltage at the analog input pin)
+
+const int analogPin = 0;
+
+void setup()
+{
+    Serial.begin(9600);
+}
+
+void loop()
+{
+    int reading = analogRead(analogPin); // program reads the analog input using this function
+    float voltage = reading / 204.6;
+    Serial.print("Reading="); // 
+    Serial.print(reading);
+    Serial.print("\t\tVolts="); // \t = one tab stop (so the numbers line up)
+    Serial.println(voltage);
+    delay(500);
+}
+
+// A0 to GND; A0 to 5V. Produce results on SM from 0 to 1023.
