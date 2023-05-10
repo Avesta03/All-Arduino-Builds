@@ -60,3 +60,49 @@ char buffer[6];
 
 // If you have indiv. strings that're formatted for messages to be displayed on SM, you can enclose the string in F():
 Serial.println(F("Goodbye World")); // This string will be stored in flash memory, rather than use up RAM.
+
+/// EEPROM (however, is intended for storing persistent data that CAN be changed)
+// EEPROM (Electrically Erasable Read-Only Memory) is designed to remember its contents for many years, and isn't actually read-only.
+
+#include <EEPROM.h>
+
+int addr = 0;
+char ch;
+
+void setup()
+{
+    Serial.begin(9600);
+    ch = EEPROM.read(addr);
+}
+
+void loop()
+{
+    if (Serial.available() > 0)
+    {
+        ch = Serial.read();
+        EEPROM.write(0, ch); // EEPROm.write takes two args (address [memory loc in EEPROM, should be between 0-1023], data to write to that location, which must be a single byte)
+        Serial.println(ch);
+    }
+    Serial.println(ch);
+    delay(1000);
+}
+
+// Here we can enter a single-digit letter code into the SM, the sketch then remembers the digit and repeatedly writes it out on the SM.
+
+// Storing an int in EEPROM
+
+int x = 1234;
+EEPROM.write(0, highByte(x)); // highByte and lowByte are useful for separating ints into two bytes.
+EEPROM.write(1, lowByte(x));
+
+// Here we are storing a two-byte int in locations 0 and 1 of EEPROM. Now, to read the int back out of EEPROM, you must read 2B from the EEPROM and reconstruct the int:
+
+byte high = EEPROM.read(0);
+byte low = EEPROM.read(1);
+int x = (high << 8) + low; // << operator is a bit shift operator that moves the eight high bytes to the top of the int and then adds in the low byte.
+
+
+
+
+
+
