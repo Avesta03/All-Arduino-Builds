@@ -101,8 +101,73 @@ byte high = EEPROM.read(0);
 byte low = EEPROM.read(1);
 int x = (high << 8) + low; // << operator is a bit shift operator that moves the eight high bytes to the top of the int and then adds in the low byte.
 
+/// Using the AVR EEPROM library (AVR allows you to read and write as much data as will fit into EEPROM with single commands)
 
+#include <avr/eeprom.h>
 
+void setup()
+{
+    Serial.begin(9600);
+    int i1 = 123; // i1 is our first var here / the & is in front of i1 as the function expects the parameter to be a reference to the var's address in memory instead of var's value
+    eeprom_write_block(&i1, 0, 2) // Writes a block of memory into EEPROM
+    int i2 = 0;
+    eeprom_read_block(&i2, 0, 2); // (reference to variable, starting byte in EEPROM where block should be written, number of bytes to write [2 for an int])
+    Serial.println(i2);
+}
 
+void loop()
+{
+}
 
+// Storing a float in EEPROM
+
+#include <avr/eeprom.h>
+
+void setup()
+{
+    Serial.begin(9600);
+    float f1 = 1.23;
+    eeprom_write_block(&f1, 0, 4);
+    float f2 = 0;
+    eeprom_read_block(&f2, 0, 4);
+    Serial.println(f2);
+}
+
+void loop()
+{
+}
+
+// The difference above here with the previous sketch is that the final parameter to eeprom_write_block and eeprom_read_block is 4B rather than 2B.
+
+// Storing a String in EEPROM (best achieved using the AVR EEPROM library)
+
+#include <avr/eeprom.h>
+
+const int maxPasswordSize = 20;
+
+char password[maxPasswordSize];
+
+void setup()
+{
+    eeprom_read_block(&password, 0, maxPasswordSize);
+    Serial.begin(9600);
+}
+
+void loop() // Loop func displays necessary messages...
+{
+    Serial.print("Your password is:");
+    Serial.println(password);
+    Serial.println("Enter a NEW password");
+    while (!Serial.available()) {}; // ... whilst the while loop does nothing until serial communication arrives, indicated by Serial.available returning more than 0
+    int n = Serial.readBytesUntil('\n', password, maxPasswordSize); // The func here will keep reading chars until end of line character '\n' is encountered.
+    password[n] = '\0'; // Must include this end marker. In the startup func the contents of EEPROM starting at loc 0 are read into password.
+    eeprom_write_block(password, 0, maxPasswordSize); // Bytes being read will be put straight into the password char array.
+    Serial.print("Saved Password: ");
+    Serial.println(password);
+}
+
+// Here we read and write passwords from EEPROM. We first display the password read from EEPROM then prompt the entering of a new password.
+// Having set the password, you can unplug and plug in the Arduino to find the old password still there in the SM.
+// As we don't know the length of the password being entered, the result of reading the bytes is stored in n and then element n of the password is set to '\0' to mark end of string.
+// New password is finally printed to the SM to confirm change in password.
 
