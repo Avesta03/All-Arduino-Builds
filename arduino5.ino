@@ -171,3 +171,25 @@ void loop() // Loop func displays necessary messages...
 // As we don't know the length of the password being entered, the result of reading the bytes is stored in n and then element n of the password is set to '\0' to mark end of string.
 // New password is finally printed to the SM to confirm change in password.
 
+/// Clearing Contents of EEPROM (uploading a new sketch will not clear EEPROM so leftover values remain)
+
+#include <EEPROM.h>
+
+void setup()
+{
+    Serial.begin(9600);
+    Serial.println("Clearing EEPROM")a;
+    for (int i = 0; i < 1024; i++)
+    {
+        EEPROM.write(i, 0)
+    }
+    Serial.println("EEPROM Cleared");
+}
+
+void loop()
+{
+}
+
+// The above resets all the contents of EEPROM to zeros.
+// You can write to an EEPROM location only ~100,000 times before it becomes unreliable. So only write values back to EEPROM when you must. 
+// EEPROM is quite slow, as it takes ~3ms to write a byte.
