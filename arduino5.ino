@@ -193,3 +193,33 @@ void loop()
 // The above resets all the contents of EEPROM to zeros.
 // You can write to an EEPROM location only ~100,000 times before it becomes unreliable. So only write values back to EEPROM when you must. 
 // EEPROM is quite slow, as it takes ~3ms to write a byte.
+
+/// Compression (finding the most efficient way of representing the data when you have too much to save for too little space)
+
+// Range Compression (life would be easier if you can fit a float into 1B when storing into EEPROM)
+
+int tempInt = (int)tempFloat; // Converting a float to an int; tempFloat contains the floating point value and (int) command is called a type cast
+
+// Type cast is used to conv a var from one type to another compatible type - i.e. in this case, the type cast converts the float of (e.g.) 20.25 to an int that will truncate the num to 20.
+
+#include <EEPROM.h>
+
+void setup()
+{
+    float tempFloat = 20.75;
+    byte tempByte = (int)(tempFloat * 4);
+    EEPROM.write(0, tempByte);
+
+    byte tempByte2 = EEPROM.read(0);
+    float temp2 = (float)(tempByte2) / 4;
+    Serial.begin(9600);
+    Serial.println("\n\n\n");
+    Serial.println(temp2);
+}
+void loop() {}
+
+// The above saves such a temperature into EEPROM then reads it back and displays it in SM as proof.
+
+/* There are other means of compressing data. e.g. if taking readings that change slowly (like temperature) you can record the first temperature at full resolution and then
+   record the changes in temperature from the previous reading. This change will generally be small and occupy fewer bytes */
+
