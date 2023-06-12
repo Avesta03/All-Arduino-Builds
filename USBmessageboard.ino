@@ -1,7 +1,7 @@
 #include <LiquidCrystal.h>
 
 // lcd(RS, E, D4, D5, D6, D7)
-LiquidCrystal lcd(5, 9, 3, 10, 11, 12);
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 int numRows = 2;
 int numCols = 16;
 
@@ -59,3 +59,28 @@ void loop() // Most action happens here - which checks for any incoming chars fr
 // scrollDisplayRight - moves all the text on the display one char position to the right
 // autoscroll - activates a mode in which, as new chars are added at the cursor, the existing text is pushed in the direction by the functions leftToRight and rightToLeft
 // noAutoscroll - turns autoscroll mode off
+
+#include <LiquidCrystal.h> 
+int Contrast=75;
+ LiquidCrystal lcd(12, 11, 5, 4, 3, 2); 
+
+ void setup()
+ {
+    analogWrite(6,Contrast);
+     lcd.begin(16, 2);
+ } 
+     void loop()
+ {
+   
+     lcd.setCursor(1, 0);
+     lcd.print("HELLO XANDER!");
+   
+    lcd.setCursor(1, 1);
+     lcd.print("UR CUTE");
+
+   /*lcd.scrollDisplayLeft();
+   delay(400); */
+   
+
+   
+}
