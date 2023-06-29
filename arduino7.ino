@@ -52,3 +52,12 @@ void loop() // Responsible for servicing any requests that come to the Webs erve
         delay(1);
     }
 }
+
+/// Web-controlled Arduinos
+// Now we'll use an Ethernet shield which allows us to turn the pins D3 to D7 on and off using a Web form.
+
+// Unlike the previous simple server example, we're going to find a way to pass the pin settings to the Arduino, which is a method called 'posting data', and is part of the HTTP standard.
+// For this to work, you have to build the posting mechanism into the HTML so that the Arduino returns HTML to the browser, which renders a form.
+// Such a form has a selection of On and Off for each pin and an Update button that will send the pin settings to the Arduino.
+// When the Update button is pressed, a second req is sent to the Arduino, which will be just like the first req but will this time contain req parameters that contain the values of the pins!
+
