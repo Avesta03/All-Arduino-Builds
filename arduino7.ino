@@ -96,7 +96,7 @@ void loop()
   {
     while (client.connected()) 
     {
-      readHeader(client);
+      readHeader(client); // Here we read the first line of the header.
       if (! pageNameIs("/"))
       {
         client.stop();  
@@ -110,11 +110,11 @@ void loop()
       client.println("<html><body>");
       client.println("<h1>Output Pins</h1>");
       client.println("<form method='GET'>");  
-      setValuesFromParams();
-      setPinStates();
+      setValuesFromParams(); // Before writing HTML for each of the pins, we call this func to read each of the request parameters and set the appropriate values in the pinStates array.
+      setPinStates(); // This array is then used to set the value of the pin outputs...
       for (int i = 0; i < numPins; i++)
       {
-         writeHTMLforPin(client, i);
+         writeHTMLforPin(client, i); // before this func is called for each of the pins, which generates a selection list for each pin, and builds this list part by part.
       }
       client.println("<input type='submit' value='Update'/>");
       client.println("</form>");
@@ -133,7 +133,7 @@ void writeHTMLforPin(EthernetClient client, int i)
   client.print(i);
   client.println("'>");
   client.print("<option value='0'");
-  if (pinState[i] == 0)
+  if (pinState[i] == 0) // The `if` statements ensure that the appropriate options are selected.
   {
     client.print(" selected");
   }
@@ -210,3 +210,9 @@ int valueOfParam(char param)
   }
   return 0;
 }
+
+// Here we use two arrays to control the pins, where `pins` just specifies which pins are to be used and `pinState` array holds the state of each pin - either 0 or 1.
+// It's necessary to read the header coming from the browser in order to get this information coming from the browser form about which pins should be on/off.
+// The functions readHeader, pageNameIs, and valueOfParam are useful general purpose funcs that you can make use of in other sketches!! :D 
+
+// Note to self: could attach LEDs/relays to the pins to control things!
