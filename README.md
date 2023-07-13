@@ -7,3 +7,7 @@ I am currently mainly using an Arduino [ELEGOO] Mega 2560 Rev3.
 Note: the files here are meant for the dedicated Arduino IDE and so you will see quite a few error messages everywhere. 
 
 Zum Erfolg!
+
+
+Other External Hardware Used:
+- ESP8266 ESP-01S Wi-Fi Module
